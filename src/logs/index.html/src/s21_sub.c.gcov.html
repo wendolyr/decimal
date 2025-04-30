@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - src/s21_sub.c</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src">src</a> - s21_sub.c<span style="font-size: 80%;"> (source / <a href="s21_sub.c.func-c.html" title="Click to go to function table">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryHi">98.1&nbsp;%</td>
+            <td class="headerCovTableEntry">53</td>
+            <td class="headerCovTableEntry">52</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2025-04-30 14:54:10</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+          </tr>
+                  <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #include &quot;s21_decimal.h&quot;</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span> <span class="tlaGNC">          32 : int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {</span></span>
+<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC">          32 :   arithmetic_code code = AR_OK;</span></span>
+<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">          32 :   if (result != NULL) set_zero_bits(result);</span></span>
+<span id="L6"><span class="lineNum">       6</span>              : </span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">          32 :   if (check_bit3(value_1) || check_bit3(value_2) || result == NULL)</span></span>
+<span id="L8"><span class="lineNum">       8</span> <span class="tlaUNC">           0 :     code = AR_INPUT;</span></span>
+<span id="L9"><span class="lineNum">       9</span>              : </span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">          32 :   if (code == AR_OK) {</span></span>
+<span id="L11"><span class="lineNum">      11</span> <span class="tlaGNC">          32 :     s21_big_decimal temp_1 = {0};</span></span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">          32 :     s21_big_decimal temp_2 = {0};</span></span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">          32 :     s21_big_decimal temp_res = {0};</span></span>
+<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">          32 :     from_dec_to_big(value_1, &amp;temp_1);</span></span>
+<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">          32 :     from_dec_to_big(value_2, &amp;temp_2);</span></span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">          32 :     normalization(&amp;temp_1, &amp;temp_2);</span></span>
+<span id="L17"><span class="lineNum">      17</span>              : </span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">          32 :     int sign_1 = get_sign(value_1);</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">          32 :     int sign_2 = get_sign(value_2);</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">          32 :     set_sign(&amp;value_1, PLUS);</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">          32 :     set_sign(&amp;value_2, PLUS);</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">          32 :     if ((sign_1 == PLUS &amp;&amp; sign_2 == MINUS) ||</span></span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">          10 :         (sign_1 == MINUS &amp;&amp; sign_2 == PLUS)) {</span></span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">          11 :       code = s21_add_big(temp_1, temp_2, &amp;temp_res);</span></span>
+<span id="L25"><span class="lineNum">      25</span>              :     } else {</span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">          21 :       if (s21_is_greater(value_1, value_2)) {</span></span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">          11 :         code = s21_sub_big(temp_1, temp_2, &amp;temp_res);</span></span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">          11 :         set_sign_big(&amp;temp_res, sign_1);</span></span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">          10 :       } else if (s21_is_less(value_1, value_2)) {</span></span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">           5 :         code = s21_sub_big(temp_2, temp_1, &amp;temp_res);</span></span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaGNC">           5 :         set_sign_big(&amp;temp_res, !sign_2);</span></span>
+<span id="L32"><span class="lineNum">      32</span>              :       }</span>
+<span id="L33"><span class="lineNum">      33</span>              :     }</span>
+<span id="L34"><span class="lineNum">      34</span>              : </span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaGNC">          32 :     if (code == AR_OK) code = from_big_to_dec(temp_res, result);</span></span>
+<span id="L36"><span class="lineNum">      36</span>              :   }</span>
+<span id="L37"><span class="lineNum">      37</span>              : </span>
+<span id="L38"><span class="lineNum">      38</span> <span class="tlaGNC">          32 :   return code;</span></span>
+<span id="L39"><span class="lineNum">      39</span>              : }</span>
+<span id="L40"><span class="lineNum">      40</span>              : </span>
+<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC">        1789 : int s21_sub_big(s21_big_decimal num_1, s21_big_decimal num_2,</span></span>
+<span id="L42"><span class="lineNum">      42</span>              :                 s21_big_decimal *result) {</span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">        1789 :   arithmetic_code code = AR_OK;</span></span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaGNC">        1789 :   set_zero_bits_big(result);</span></span>
+<span id="L45"><span class="lineNum">      45</span>              : </span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaGNC">        1789 :   int mem = 0;</span></span>
+<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">        1789 :   int borrow_scale = 0;</span></span>
+<span id="L48"><span class="lineNum">      48</span>              : </span>
+<span id="L49"><span class="lineNum">      49</span> <span class="tlaGNC">      402525 :   for (int i = 0; i &lt; 224; i++) {</span></span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaGNC">      400736 :     if (borrow_scale == 1) {</span></span>
+<span id="L51"><span class="lineNum">      51</span> <span class="tlaGNC">        1035 :       mem = -1;</span></span>
+<span id="L52"><span class="lineNum">      52</span> <span class="tlaGNC">      399701 :     } else if (borrow_scale &gt; 1) {</span></span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">         704 :       mem = 1;</span></span>
+<span id="L54"><span class="lineNum">      54</span> <span class="tlaGNC">      398997 :     } else if (borrow_scale == 0) {</span></span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">      398997 :       mem = 0;</span></span>
+<span id="L56"><span class="lineNum">      56</span>              :     }</span>
+<span id="L57"><span class="lineNum">      57</span>              : </span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">      400736 :     int minuend = get_bit_big(num_1, i) + mem;</span></span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">      400736 :     int subtrahend = get_bit_big(num_2, i);</span></span>
+<span id="L60"><span class="lineNum">      60</span>              : </span>
+<span id="L61"><span class="lineNum">      61</span> <span class="tlaGNC">      400736 :     if (borrow_scale &gt; 0) borrow_scale--;</span></span>
+<span id="L62"><span class="lineNum">      62</span>              : </span>
+<span id="L63"><span class="lineNum">      63</span> <span class="tlaGNC">      400736 :     if (minuend &lt; subtrahend) {</span></span>
+<span id="L64"><span class="lineNum">      64</span> <span class="tlaGNC">        1035 :       int j = i + 1;</span></span>
+<span id="L65"><span class="lineNum">      65</span> <span class="tlaGNC">        1035 :       borrow_scale++;</span></span>
+<span id="L66"><span class="lineNum">      66</span> <span class="tlaGNC">        1739 :       while (get_bit_big(num_1, j) == 0 &amp;&amp; j &lt; 224) {</span></span>
+<span id="L67"><span class="lineNum">      67</span> <span class="tlaGNC">         704 :         j++;</span></span>
+<span id="L68"><span class="lineNum">      68</span> <span class="tlaGNC">         704 :         borrow_scale++;</span></span>
+<span id="L69"><span class="lineNum">      69</span>              :       }</span>
+<span id="L70"><span class="lineNum">      70</span> <span class="tlaGNC">        1035 :       minuend += 2;</span></span>
+<span id="L71"><span class="lineNum">      71</span>              :     }</span>
+<span id="L72"><span class="lineNum">      72</span>              : </span>
+<span id="L73"><span class="lineNum">      73</span> <span class="tlaGNC">      400736 :     int difference = minuend - subtrahend;</span></span>
+<span id="L74"><span class="lineNum">      74</span> <span class="tlaGNC">      400736 :     set_bit_big(result, i, difference);</span></span>
+<span id="L75"><span class="lineNum">      75</span>              :   }</span>
+<span id="L76"><span class="lineNum">      76</span>              : </span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaGNC">        1789 :   set_scale_big(result, get_scale_big(num_1));</span></span>
+<span id="L78"><span class="lineNum">      78</span>              : </span>
+<span id="L79"><span class="lineNum">      79</span> <span class="tlaGNC">        1789 :   return code;</span></span>
+<span id="L80"><span class="lineNum">      80</span>              : }</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>
