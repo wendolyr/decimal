@@ -45,7 +45,7 @@ gcov_report: clean test
 
 clean:
 	@echo "$(RED)Cleaning up...$(RESET)"
-	@rm -rf *.a *.o ./tests/test test_check new_test *.gc* */*.gc* coverage.info out *.log
+	@rm -rf *.a *.o ./tests/test test_check new_test *.gc* */*.gc* coverage.info logs
 	@echo "$(GREEN)Cleanup complete$(RESET)"
 
 html:
